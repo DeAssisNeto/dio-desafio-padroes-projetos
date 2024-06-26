@@ -1,5 +1,6 @@
 package one.digitalinnovation.padroes.projeto.services.impl;
 
+import one.digitalinnovation.padroes.projeto.dtos.OrderRecordDto;
 import one.digitalinnovation.padroes.projeto.models.OrderModel;
 import one.digitalinnovation.padroes.projeto.services.OrderService;
 import org.springframework.data.domain.Page;
@@ -10,28 +11,29 @@ import java.util.UUID;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
     @Override
     public Page<OrderModel> findAll(Pageable pageable) {
         return null;
     }
 
     @Override
-    public OrderModel findById(long id) {
+    public OrderModel findById(UUID id) {
         return null;
     }
 
     @Override
-    public OrderModel save(OrderModel order) {
+    public OrderModel save(OrderRecordDto dto) {
         return null;
     }
 
     @Override
-    public OrderModel update(UUID id, OrderModel order) {
+    public OrderModel update(UUID id, OrderRecordDto dto) {
         return null;
     }
 
     @Override
-    public void delete(OrderModel order) {
+    public void delete(UUID order) {
 
     }
 }

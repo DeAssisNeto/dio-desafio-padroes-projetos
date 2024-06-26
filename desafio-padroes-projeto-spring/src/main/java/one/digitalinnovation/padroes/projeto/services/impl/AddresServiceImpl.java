@@ -1,5 +1,6 @@
 package one.digitalinnovation.padroes.projeto.services.impl;
 
+import one.digitalinnovation.padroes.projeto.dtos.AddressRecordDto;
 import one.digitalinnovation.padroes.projeto.models.AddressModel;
 import one.digitalinnovation.padroes.projeto.services.AddresService;
 import org.springframework.data.domain.Page;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AddresServiceImpl implements AddresService {
-
 
     @Override
     public Page<AddressModel> findAll(Pageable pageable) {
@@ -21,12 +21,12 @@ public class AddresServiceImpl implements AddresService {
     }
 
     @Override
-    public AddressModel save(AddressModel address) {
+    public AddressModel save(AddressRecordDto dto) {
         return null;
     }
 
     @Override
-    public AddressModel update(String id, AddressModel address) {
+    public AddressModel update(String id, AddressRecordDto dto) {
         return null;
     }
 
