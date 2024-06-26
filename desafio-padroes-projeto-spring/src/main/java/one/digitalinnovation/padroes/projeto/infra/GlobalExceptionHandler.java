@@ -1,4 +1,6 @@
 package one.digitalinnovation.padroes.projeto.infra;
+import one.digitalinnovation.padroes.projeto.exceptions.CustomerAlreadyExistsException;
+import one.digitalinnovation.padroes.projeto.exceptions.ResourceNotFoundException;
 import one.digitalinnovation.padroes.projeto.utils.ApiGlobalResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,19 @@ public class GlobalExceptionHandler {
         });
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiGlobalResponseDto(errors));
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    private ResponseEntity<ApiGlobalResponseDto> ResourceNotFoundHandler(ResourceNotFoundException e){
+        Map<String, String> error = Map.of("error", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiGlobalResponseDto(error));
+    }
+
+    @ExceptionHandler(CustomerAlreadyExistsException.class)
+    private ResponseEntity<ApiGlobalResponseDto> userAlreadyExistsHandler(CustomerAlreadyExistsException e){
+        Map<String, String> error = Map.of("error", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiGlobalResponseDto(error));
+
     }
 
 }

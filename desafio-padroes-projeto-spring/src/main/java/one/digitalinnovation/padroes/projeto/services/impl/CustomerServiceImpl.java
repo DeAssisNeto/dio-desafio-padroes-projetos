@@ -1,6 +1,8 @@
 package one.digitalinnovation.padroes.projeto.services.impl;
 
 import one.digitalinnovation.padroes.projeto.dtos.CustomerRecordDto;
+import one.digitalinnovation.padroes.projeto.exceptions.CustomerAlreadyExistsException;
+import one.digitalinnovation.padroes.projeto.exceptions.ResourceNotFoundException;
 import one.digitalinnovation.padroes.projeto.models.CustomerModel;
 import one.digitalinnovation.padroes.projeto.repositories.CustomerRepository;
 import one.digitalinnovation.padroes.projeto.services.CustomerService;
@@ -24,12 +26,16 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerModel findById(UUID id) {
-        return customerRepository.findById(id).orElse(null);
+        Optional<CustomerModel> customer = customerRepository.findById(id);
+        if (customer.isPresent()) return customer.get();
+
+        throw new ResourceNotFoundException("Customer", "id", id.toString());
 
     }
 
     @Override
     public CustomerModel save(CustomerRecordDto dto) {
+        if (customerRepository.existsByCpf(dto.cpf())) throw new CustomerAlreadyExistsException(dto.cpf());
         return customerRepository.save(new CustomerModel(dto.name(), dto.cpf()));
     }
 
@@ -42,11 +48,12 @@ public class CustomerServiceImpl implements CustomerService {
             if(dto.cpf() != null) customerModel.setCpf(dto.cpf());
             return customerRepository.save(customerModel);
         }
-        return null;
+        throw new ResourceNotFoundException("Customer", "id", id.toString());
     }
 
     @Override
     public void delete(UUID id) {
+        if (!customerRepository.existsById(id)) throw new ResourceNotFoundException("Customer", "id", id.toString());
         customerRepository.deleteById(id);
     }
 }
