@@ -17,7 +17,7 @@ public class CustomerModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @Column(nullable = false, length = 100)
-    private String nome;
+    private String name;
     @Column(nullable = false, length = 11)
     private String cpf;
 }

@@ -1,6 +1,6 @@
 package one.digitalinnovation.padroes.projeto.services.impl;
 
-import one.digitalinnovation.padroes.projeto.models.ProductOrder;
+import one.digitalinnovation.padroes.projeto.models.ProductOrderModel;
 import one.digitalinnovation.padroes.projeto.services.ProductOrderService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,27 +11,27 @@ import java.util.UUID;
 @Service
 public class ProductOrderServiceImpl implements ProductOrderService {
     @Override
-    public Page<ProductOrder> findAll(Pageable pageable) {
+    public Page<ProductOrderModel> findAll(Pageable pageable) {
         return null;
     }
 
     @Override
-    public ProductOrder findOne(Long id) {
+    public ProductOrderModel findOne(Long id) {
         return null;
     }
 
     @Override
-    public ProductOrder save(ProductOrder productOrder) {
+    public ProductOrderModel save(ProductOrderModel productOrderModel) {
         return null;
     }
 
     @Override
-    public ProductOrder update(UUID id, ProductOrder productOrder) {
+    public ProductOrderModel update(UUID id, ProductOrderModel productOrderModel) {
         return null;
     }
 
     @Override
-    public void delete(ProductOrder productOrder) {
+    public void delete(ProductOrderModel productOrderModel) {
 
     }
 }

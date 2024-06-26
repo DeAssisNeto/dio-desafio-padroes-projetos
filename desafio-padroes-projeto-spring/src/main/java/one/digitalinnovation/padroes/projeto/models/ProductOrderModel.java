@@ -12,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProductOrder {
+public class ProductOrderModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
