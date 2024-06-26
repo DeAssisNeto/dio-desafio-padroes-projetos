@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface CustomerService {
     Page<CustomerModel> findAll(Pageable pageable);
-    CustomerModel findOne(UUID id);
+    CustomerModel findById(UUID id);
     CustomerModel save(CustomerRecordDto dto);
     CustomerModel update(UUID id, CustomerRecordDto dto);
     void delete(UUID id);

@@ -20,4 +20,9 @@ public class CustomerModel {
     private String name;
     @Column(nullable = false, length = 11)
     private String cpf;
+
+    public CustomerModel(String name, String cpf) {
+        this.name = name;
+        this.cpf = cpf;
+    }
 }
