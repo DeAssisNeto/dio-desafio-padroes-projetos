@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "addres_tb")
 @NoArgsConstructor
@@ -13,6 +15,8 @@ import lombok.Setter;
 @Setter
 public class AddressModel {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     private String cep;
     private String logradouro;
     private String complemento;
