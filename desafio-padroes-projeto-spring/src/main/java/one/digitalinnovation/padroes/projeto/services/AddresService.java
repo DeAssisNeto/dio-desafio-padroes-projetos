@@ -5,9 +5,11 @@ import one.digitalinnovation.padroes.projeto.models.AddressModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.UUID;
+
 public interface AddresService {
     Page<AddressModel> findAll(Pageable pageable);
-    AddressModel findById(String id);
+    AddressModel findById(UUID id);
     AddressModel save(AddressRecordDto dto);
     AddressModel update(String id, AddressRecordDto dto);
     void delete(String id);
