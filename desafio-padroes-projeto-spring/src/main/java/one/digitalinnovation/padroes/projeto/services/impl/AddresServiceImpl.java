@@ -72,6 +72,8 @@ public class AddresServiceImpl implements AddresService {
 
     @Override
     public void delete(UUID id) {
+        if (!addressRepository.existsById(id)) throw new ResourceNotFoundException("Address", "id", id.toString());
+        addressRepository.deleteById(id);
 
     }
 }

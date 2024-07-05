@@ -44,4 +44,10 @@ public class AddressController {
                                                               @RequestBody AddressRecordDto address) {
         return ResponseEntity.ok(new ApiGlobalResponseDto(addresService.update(id, address)));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteAddress(@PathVariable UUID id) {
+        addresService.delete(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
