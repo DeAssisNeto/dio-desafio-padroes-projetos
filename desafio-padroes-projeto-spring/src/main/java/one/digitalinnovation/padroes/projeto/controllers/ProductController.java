@@ -40,4 +40,10 @@ public class ProductController {
         return ResponseEntity.ok(new ApiGlobalResponseDto(productService.update(id, dto)));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteProduct(@PathVariable UUID id) {
+        productService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
