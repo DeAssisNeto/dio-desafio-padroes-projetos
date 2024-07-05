@@ -1,5 +1,6 @@
 package one.digitalinnovation.padroes.projeto.controllers;
 
+import jakarta.validation.Valid;
 import one.digitalinnovation.padroes.projeto.dtos.AddressRecordDto;
 import one.digitalinnovation.padroes.projeto.models.AddressModel;
 import one.digitalinnovation.padroes.projeto.services.AddresService;
@@ -22,7 +23,7 @@ public class AddressController {
     private AddresService addresService;
 
     @PostMapping
-    public ResponseEntity<AddressModel> addAddress(@RequestBody AddressRecordDto address) {
+    public ResponseEntity<AddressModel> addAddress(@RequestBody @Valid AddressRecordDto address) {
         return ResponseEntity.status(HttpStatus.CREATED).body(addresService.save(address));
     }
 
@@ -36,5 +37,11 @@ public class AddressController {
     @GetMapping("/{id}")
     public ResponseEntity<ApiGlobalResponseDto> getAddress(@PathVariable UUID id) {
         return ResponseEntity.ok(new ApiGlobalResponseDto(addresService.findById(id)));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiGlobalResponseDto> updateAddress(@PathVariable UUID id,
+                                                              @RequestBody AddressRecordDto address) {
+        return ResponseEntity.ok(new ApiGlobalResponseDto(addresService.update(id, address)));
     }
 }

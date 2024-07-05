@@ -5,9 +5,10 @@ import one.digitalinnovation.padroes.projeto.exceptions.ResourceNotFoundExceptio
 import one.digitalinnovation.padroes.projeto.models.AddressModel;
 import one.digitalinnovation.padroes.projeto.models.CustomerModel;
 import one.digitalinnovation.padroes.projeto.repositories.AddressRepository;
-import one.digitalinnovation.padroes.projeto.repositories.CustomerRepository;
 import one.digitalinnovation.padroes.projeto.services.AddresService;
+import one.digitalinnovation.padroes.projeto.services.CustomerService;
 import one.digitalinnovation.padroes.projeto.services.ViaCepService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +23,7 @@ public class AddresServiceImpl implements AddresService {
     private AddressRepository addressRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerService customerService;
 
     @Autowired
     private ViaCepService viaCepService;
@@ -41,23 +42,36 @@ public class AddresServiceImpl implements AddresService {
 
     @Override
     public AddressModel save(AddressRecordDto dto) {
-        Optional<CustomerModel> customerModel = customerRepository.findById(dto.customer_id());
-        if (customerModel.isPresent()){
-            AddressModel address = viaCepService.getAddressByCep(dto.cep());
-            address.setCustomerModel(customerModel.get());
-            addressRepository.save(address);
-            return address;
+        CustomerModel customerModel = customerService.findById(dto.customer_id());
+        AddressModel address = viaCepService.getAddressByCep(dto.cep());
+        address.setCustomerModel(customerModel);
+        addressRepository.save(address);
+        return address;
+    }
+
+    @Override
+    public AddressModel update(UUID id, AddressRecordDto dto) {
+        Optional<AddressModel> addressOptional = addressRepository.findById(id);
+        if (addressOptional.isPresent()) {
+            AddressModel addressModel = addressOptional.get();
+            if (dto.customer_id() != null) {
+                CustomerModel customerModel = customerService.findById(dto.customer_id());
+                addressModel.setCustomerModel(customerModel);
+            }
+            if (dto.cep() != null) {
+                AddressModel addressViaCep = viaCepService.getAddressByCep(dto.cep());
+                addressViaCep.setId(addressModel.getId());
+                addressViaCep.setCustomerModel(addressModel.getCustomerModel());
+                BeanUtils.copyProperties(addressViaCep, addressModel);
+            }
+            return addressRepository.save(addressModel);
         }
-        throw new ResourceNotFoundException("Customer", "id", dto.customer_id().toString());
+        throw new ResourceNotFoundException("Address", "id", id.toString());
+
     }
 
     @Override
-    public AddressModel update(String id, AddressRecordDto dto) {
-        return null;
-    }
-
-    @Override
-    public void delete(String id) {
+    public void delete(UUID id) {
 
     }
 }

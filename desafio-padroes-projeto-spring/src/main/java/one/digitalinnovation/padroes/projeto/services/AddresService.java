@@ -11,6 +11,6 @@ public interface AddresService {
     Page<AddressModel> findAll(Pageable pageable);
     AddressModel findById(UUID id);
     AddressModel save(AddressRecordDto dto);
-    AddressModel update(String id, AddressRecordDto dto);
-    void delete(String id);
+    AddressModel update(UUID id, AddressRecordDto dto);
+    void delete(UUID id);
 }

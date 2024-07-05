@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     private ResponseEntity<ApiGlobalResponseDto> ResourceNotFoundHandler(ResourceNotFoundException e){
         Map<String, String> error = Map.of("error", e.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiGlobalResponseDto(error));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiGlobalResponseDto(error));
     }
 
     @ExceptionHandler(CustomerAlreadyExistsException.class)
