@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import one.digitalinnovation.padroes.projeto.dtos.ProductRecordDto;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -29,4 +30,12 @@ public class ProductModel {
     private String barCode;
     @Column(nullable = false, precision = 13)
     private BigInteger stock;
+
+    public ProductModel(ProductRecordDto dto) {
+        this.name = dto.name();
+        this.price = dto.price();
+        this.expirationDate = dto.expirationDate();
+        this.barCode = dto.barCode();
+        this.stock = dto.stock();
+    }
 }

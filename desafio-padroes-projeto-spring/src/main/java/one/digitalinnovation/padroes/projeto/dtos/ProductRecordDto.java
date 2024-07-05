@@ -9,19 +9,16 @@ import java.time.LocalDate;
 
 public record ProductRecordDto(
         @NotNull(message = "This field cannot be null")
-        @NotBlank(message = "This field cannot be null")
+        @NotBlank(message = "This field cannot be blank")
         String name,
         @NotNull(message = "This field cannot be null")
-        @NotBlank(message = "This field cannot be null")
         BigDecimal price,
         @NotNull(message = "This field cannot be null")
-        @NotBlank(message = "This field cannot be null")
         LocalDate expirationDate,
         @NotNull(message = "This field cannot be null")
-        @NotBlank(message = "This field cannot be null")
+        @NotBlank(message = "This field cannot be blank")
         String barCode,
         @NotNull(message = "This field cannot be null")
-        @NotBlank(message = "This field cannot be null")
         BigInteger stock
 ) {
 }
