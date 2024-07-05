@@ -37,8 +37,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductModel update(long id, ProductRecordDto dto) {
-        return null;
+    public ProductModel update(UUID id, ProductRecordDto dto) {
+        Optional<ProductModel> productModel = productRepository.findById(id);
+        if (productModel.isEmpty()) throw new ResourceNotFoundException("Product", "id", id.toString());
+        ProductModel product = productModel.get();
+
+        if (dto.name() != null) product.setName(dto.name());
+        if (dto.price() != null) product.setPrice(dto.price());
+        if (dto.expirationDate() != null) product.setExpirationDate(dto.expirationDate());
+        if (dto.barCode() != null) product.setBarCode(dto.barCode());
+        if (dto.stock() != null) product.setStock(dto.stock());
+
+        return productRepository.save(product);
+
     }
 
     @Override

@@ -21,8 +21,8 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ApiGlobalResponseDto> addProduct(@RequestBody @Valid ProductRecordDto product) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiGlobalResponseDto(productService.save(product)));
+    public ResponseEntity<ApiGlobalResponseDto> addProduct(@RequestBody @Valid ProductRecordDto dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ApiGlobalResponseDto(productService.save(dto)));
     }
 
     @GetMapping
@@ -35,5 +35,9 @@ public class ProductController {
         return ResponseEntity.ok(new ApiGlobalResponseDto(productService.findById(id)));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiGlobalResponseDto> updateProduct(@PathVariable UUID id, @RequestBody ProductRecordDto dto) {
+        return ResponseEntity.ok(new ApiGlobalResponseDto(productService.update(id, dto)));
+    }
 
 }

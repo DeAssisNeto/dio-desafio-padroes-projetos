@@ -11,6 +11,6 @@ public interface ProductService {
     Page<ProductModel> findAll(Pageable pageable);
     ProductModel findById(UUID id);
     ProductModel save(ProductRecordDto dto);
-    ProductModel update(long id, ProductRecordDto dto);
+    ProductModel update(UUID id, ProductRecordDto dto);
     void delete(UUID id);
 }
