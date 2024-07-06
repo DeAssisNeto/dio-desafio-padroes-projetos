@@ -1,8 +1,10 @@
 package one.digitalinnovation.padroes.projeto.services.impl;
 
 import one.digitalinnovation.padroes.projeto.dtos.OrderRecordDto;
+import one.digitalinnovation.padroes.projeto.models.CustomerModel;
 import one.digitalinnovation.padroes.projeto.models.OrderModel;
 import one.digitalinnovation.padroes.projeto.repositories.OrderRepository;
+import one.digitalinnovation.padroes.projeto.services.CustomerService;
 import one.digitalinnovation.padroes.projeto.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +17,8 @@ import java.util.UUID;
 public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private CustomerService customerService;
 
     @Override
     public Page<OrderModel> findAll(Pageable pageable) {
@@ -28,7 +32,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderModel save(OrderRecordDto dto) {
-        return null;
+        CustomerModel customerModel = customerService.findById(dto.customerId());
+        return orderRepository.save(new OrderModel(dto.productQuantity(), customerModel));
     }
 
     @Override

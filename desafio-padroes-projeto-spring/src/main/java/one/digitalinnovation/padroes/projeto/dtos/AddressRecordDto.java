@@ -10,6 +10,6 @@ public record AddressRecordDto(
         @NotBlank(message = "This field cannot be blank")
         String cep,
         @NotNull(message = "This field cannot be null")
-        UUID customer_id
+        UUID customerId
 ) {
 }

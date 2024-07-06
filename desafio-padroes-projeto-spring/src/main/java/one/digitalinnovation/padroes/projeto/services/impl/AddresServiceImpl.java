@@ -42,7 +42,7 @@ public class AddresServiceImpl implements AddresService {
 
     @Override
     public AddressModel save(AddressRecordDto dto) {
-        CustomerModel customerModel = customerService.findById(dto.customer_id());
+        CustomerModel customerModel = customerService.findById(dto.customerId());
         AddressModel address = viaCepService.getAddressByCep(dto.cep());
         address.setCustomerModel(customerModel);
         addressRepository.save(address);
@@ -54,8 +54,8 @@ public class AddresServiceImpl implements AddresService {
         Optional<AddressModel> addressOptional = addressRepository.findById(id);
         if (addressOptional.isPresent()) {
             AddressModel addressModel = addressOptional.get();
-            if (dto.customer_id() != null) {
-                CustomerModel customerModel = customerService.findById(dto.customer_id());
+            if (dto.customerId() != null) {
+                CustomerModel customerModel = customerService.findById(dto.customerId());
                 addressModel.setCustomerModel(customerModel);
             }
             if (dto.cep() != null) {
