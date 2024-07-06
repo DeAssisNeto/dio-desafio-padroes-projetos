@@ -18,7 +18,7 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping
-    public ResponseEntity<ApiGlobalResponseDto> createOrder(@RequestBody OrderRecordDto dto) {
+    public ResponseEntity<ApiGlobalResponseDto> save(@RequestBody OrderRecordDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiGlobalResponseDto(orderService.save(dto)));
     }
 

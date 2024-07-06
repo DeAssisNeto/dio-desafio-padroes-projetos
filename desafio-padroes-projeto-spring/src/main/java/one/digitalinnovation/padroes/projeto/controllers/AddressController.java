@@ -23,7 +23,7 @@ public class AddressController {
     private AddresService addresService;
 
     @PostMapping
-    public ResponseEntity<AddressModel> addAddress(@RequestBody @Valid AddressRecordDto address) {
+    public ResponseEntity<AddressModel> save(@RequestBody @Valid AddressRecordDto address) {
         return ResponseEntity.status(HttpStatus.CREATED).body(addresService.save(address));
     }
 

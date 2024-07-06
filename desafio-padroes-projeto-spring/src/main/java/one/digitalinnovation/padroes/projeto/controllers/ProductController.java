@@ -21,7 +21,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity<ApiGlobalResponseDto> addProduct(@RequestBody @Valid ProductRecordDto dto) {
+    public ResponseEntity<ApiGlobalResponseDto> save(@RequestBody @Valid ProductRecordDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(new ApiGlobalResponseDto(productService.save(dto)));
     }
 
