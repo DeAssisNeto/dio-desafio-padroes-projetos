@@ -33,6 +33,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderModel save(OrderRecordDto dto) {
         CustomerModel customerModel = customerService.findById(dto.customerId());
+
+
+
         return orderRepository.save(new OrderModel(dto.productQuantity(), customerModel));
     }
 
