@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/order")
 public class OrderController {
@@ -26,4 +28,10 @@ public class OrderController {
     public ResponseEntity<Page<OrderModel>> findAll(Pageable pageable) {
         return ResponseEntity.ok(orderService.findAll(pageable));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiGlobalResponseDto> findById(@PathVariable UUID id) {
+        return ResponseEntity.ok(new ApiGlobalResponseDto(orderService.findById(id)));
+    }
+
 }

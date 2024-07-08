@@ -1,6 +1,7 @@
 package one.digitalinnovation.padroes.projeto.services.impl;
 
 import one.digitalinnovation.padroes.projeto.dtos.OrderRecordDto;
+import one.digitalinnovation.padroes.projeto.exceptions.ResourceNotFoundException;
 import one.digitalinnovation.padroes.projeto.models.CustomerModel;
 import one.digitalinnovation.padroes.projeto.models.OrderModel;
 import one.digitalinnovation.padroes.projeto.repositories.OrderRepository;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -27,15 +29,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderModel findById(UUID id) {
-        return null;
+        Optional<OrderModel> orderModel = orderRepository.findById(id);
+        if (orderModel.isEmpty()) throw new ResourceNotFoundException("Order", "id", id.toString());
+        return orderModel.get();
     }
 
     @Override
     public OrderModel save(OrderRecordDto dto) {
         CustomerModel customerModel = customerService.findById(dto.customerId());
-
-
-
         return orderRepository.save(new OrderModel(dto.productQuantity(), customerModel));
     }
 
