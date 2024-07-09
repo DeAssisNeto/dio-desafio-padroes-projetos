@@ -29,7 +29,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CustomerModel>> getAllCustomers(@PageableDefault(
+    public ResponseEntity<Page<CustomerModel>> findAll(@PageableDefault(
             page = 0,size = 10,sort = "id",direction = Sort.Direction.ASC
     ) Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(customerService.findAll(pageable));

@@ -22,4 +22,9 @@ public class ProductOrderModel {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private OrderModel orderModel;
+
+    public ProductOrderModel(ProductModel productModel, OrderModel orderModel) {
+        this.productModel = productModel;
+        this.orderModel = orderModel;
+    }
 }

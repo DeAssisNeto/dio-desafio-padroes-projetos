@@ -8,6 +8,8 @@ import one.digitalinnovation.padroes.projeto.utils.ApiGlobalResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,9 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductModel>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<ProductModel>> findAll(@PageableDefault(
+            page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC
+    )Pageable pageable) {
         return ResponseEntity.ok(productService.findAll(pageable));
     }
 

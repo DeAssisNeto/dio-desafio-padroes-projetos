@@ -1,5 +1,6 @@
 package one.digitalinnovation.padroes.projeto.infra;
 import one.digitalinnovation.padroes.projeto.exceptions.CustomerAlreadyExistsException;
+import one.digitalinnovation.padroes.projeto.exceptions.InsufficientQuantityStockException;
 import one.digitalinnovation.padroes.projeto.exceptions.ResourceNotFoundException;
 import one.digitalinnovation.padroes.projeto.utils.ApiGlobalResponseDto;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,12 @@ public class GlobalExceptionHandler {
         Map<String, String> error = Map.of("error", e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiGlobalResponseDto(error));
 
+    }
+
+    @ExceptionHandler(InsufficientQuantityStockException.class)
+    private ResponseEntity<ApiGlobalResponseDto> insufficientQuantityStockHandler(InsufficientQuantityStockException e){
+        Map<String, String> error = Map.of("error", e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiGlobalResponseDto(error));
     }
 
 }
