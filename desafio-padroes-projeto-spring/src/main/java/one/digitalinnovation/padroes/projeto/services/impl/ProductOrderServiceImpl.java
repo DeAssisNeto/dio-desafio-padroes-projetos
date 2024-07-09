@@ -2,6 +2,7 @@ package one.digitalinnovation.padroes.projeto.services.impl;
 
 import one.digitalinnovation.padroes.projeto.dtos.ProductOrderRecordDto;
 import one.digitalinnovation.padroes.projeto.exceptions.InsufficientQuantityStockException;
+import one.digitalinnovation.padroes.projeto.exceptions.ResourceNotFoundException;
 import one.digitalinnovation.padroes.projeto.models.OrderModel;
 import one.digitalinnovation.padroes.projeto.models.ProductModel;
 import one.digitalinnovation.padroes.projeto.models.ProductOrderModel;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,7 +35,9 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public ProductOrderModel findOne(UUID id) {
-        return null;
+        Optional<ProductOrderModel> productOrderModel = productOrderRepository.findById(id);
+        if (productOrderModel.isEmpty()) throw new ResourceNotFoundException("ProductOrder", "id", id.toString());
+        return productOrderModel.get();
     }
 
     @Override
