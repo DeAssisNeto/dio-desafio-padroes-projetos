@@ -42,11 +42,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderModel update(UUID id, OrderRecordDto dto) {
-        return null;
+        Optional<OrderModel> orderModel = orderRepository.findById(id);
+        if (orderModel.isEmpty()) throw new ResourceNotFoundException("Order", "id", id.toString());
+
+        if (dto.productQuantity() != null) orderModel.get().setProductQuantity(dto.productQuantity());
+        return orderRepository.save(orderModel.get());
     }
 
     @Override
     public void delete(UUID order) {
-
+        Optional<OrderModel> orderModel = orderRepository.findById(order);
+        if (orderModel.isEmpty()) throw new ResourceNotFoundException("Order", "id", order.toString());
+        orderRepository.deleteById(order);
     }
 }

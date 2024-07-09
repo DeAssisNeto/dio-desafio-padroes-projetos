@@ -34,4 +34,15 @@ public class OrderController {
         return ResponseEntity.ok(new ApiGlobalResponseDto(orderService.findById(id)));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiGlobalResponseDto> update(@PathVariable UUID id, @RequestBody OrderRecordDto dto) {
+        return ResponseEntity.ok(new ApiGlobalResponseDto(orderService.update(id, dto)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiGlobalResponseDto> delete(@PathVariable UUID id) {
+        orderService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
