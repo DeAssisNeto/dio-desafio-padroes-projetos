@@ -65,7 +65,11 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Override
     public void delete(UUID id) {
+        Optional<ProductOrderModel> productOrderModel = productOrderRepository.findById(id);
+        if (productOrderModel.isEmpty()) throw new ResourceNotFoundException("ProductOrder", "id", id.toString());
 
+        reduceStock(productOrderModel.get().getOrderModel(), productOrderModel.get().getProductModel());
+        productOrderRepository.deleteById(id);
     }
 
     private void reduceStock(OrderModel orderModel, ProductModel productModel){

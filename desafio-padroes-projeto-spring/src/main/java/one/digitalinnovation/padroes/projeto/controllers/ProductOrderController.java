@@ -45,4 +45,10 @@ public class ProductOrderController {
     public ResponseEntity<ApiGlobalResponseDto> update(@PathVariable UUID id, @RequestBody @Valid ProductOrderRecordDto dto) {
         return ResponseEntity.ok(new ApiGlobalResponseDto(productOrderService.update(id, dto)));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable UUID id) {
+        productOrderService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
