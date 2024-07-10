@@ -41,4 +41,8 @@ public class ProductOrderController {
         return ResponseEntity.ok(new ApiGlobalResponseDto(productOrderService.findOne(id)));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiGlobalResponseDto> update(@PathVariable UUID id, @RequestBody @Valid ProductOrderRecordDto dto) {
+        return ResponseEntity.ok(new ApiGlobalResponseDto(productOrderService.update(id, dto)));
+    }
 }

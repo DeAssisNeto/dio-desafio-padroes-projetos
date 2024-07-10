@@ -44,13 +44,23 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     public ProductOrderModel save(ProductOrderRecordDto dto) {
         ProductModel productModel = productService.findById(dto.productId());
         OrderModel orderModel = orderService.findById(dto.orderId());
-        checkStock(orderModel, productModel);
+        reduceStock(orderModel, productModel);
         return productOrderRepository.save(new ProductOrderModel(productModel, orderModel));
     }
 
     @Override
     public ProductOrderModel update(UUID id, ProductOrderRecordDto dto) {
-        return null;
+        Optional<ProductOrderModel> productOrderModel = productOrderRepository.findById(id);
+
+        if (productOrderModel.isEmpty()) throw new ResourceNotFoundException("ProductOrder", "id", id.toString());
+
+        increaseStock(productOrderModel.get().getOrderModel(), productOrderModel.get().getProductModel());
+        ProductModel productModel = productService.findById(dto.productId());
+        OrderModel orderModel = orderService.findById(dto.orderId());
+        reduceStock(orderModel, productModel);
+
+
+        return productOrderRepository.save(productOrderModel.get());
     }
 
     @Override
@@ -58,7 +68,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     }
 
-    private void checkStock(OrderModel orderModel, ProductModel productModel){
+    private void reduceStock(OrderModel orderModel, ProductModel productModel){
         BigInteger order = orderModel.getProductQuantity();
         BigInteger stock = productModel.getStock();
         if (!(stock.compareTo(order) >= 0)) {
@@ -66,5 +76,11 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         }
 
         productModel.setStock(stock.subtract(order));
+    }
+
+    private void increaseStock(OrderModel orderModel, ProductModel productModel){
+        BigInteger order = orderModel.getProductQuantity();
+        BigInteger stock = productModel.getStock();
+        productModel.setStock(stock.add(order));
     }
 }
